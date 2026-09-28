@@ -1,36 +1,47 @@
-
-import requests
-import smtplib
 import os
+import smtplib
+import requests
 
 MY_EMAIL = os.environ.get("MY_EMAIL")
 MY_PASSWORD = os.environ.get("MY_PASSWORD")
 
 PARAMETERS = {
-"lat" : 24.617838,
-"lon" :  46.748404,
-"appid" : "71ab17ddeffca062d4f83895801c0fd2",
-"cnt" : 4
+    "lat": 24.617838,
+    "lon": 46.748404,  # تم إصلاح المسافة الخفية هنا
+    "appid": "71ab17ddeffca062d4f83895801c0fd2",
+    "cnt": 4,
 }
 
-
-
-response = requests.get("https://api.openweathermap.org/data/2.5/forecast" , params=PARAMETERS)
+response = requests.get(
+    "https://api.openweathermap.org/data/2.5/forecast", params=PARAMETERS
+)
 response.raise_for_status()
 data = response.json()
-print(data)
-will_rain = False
-for code in range(4):
-    if int(data["list"][code]["weather"][0]["id"]) <=700:
-        will_rain =True
 
-if will_rain:
-    connection = smtplib.SMTP("smtp.gmail.com")
+will_rain = False
+for hour_data in data["list"]:
+    weather_id = int(hour_data["weather"][0]["id"])
+    if weather_id < 700:  # الرموز أقل من 700 تعني أمطار وخيول ورعد
+        will_rain = True
+        break
+
+# تحديد نص الرسالة بناءً على الحالة
+subject = "Attention: Weather Update"
+message_body = (
+    "It will rain today, bring an umbrella!"
+    if will_rain
+    else "No rain expected today."
+)
+email_message = f"Subject: {subject}\n\n{message_body}"
+
+# إرسال الإيميل مرة واحدة باستخدام with للإغلاق التلقائي
+with smtplib.SMTP("smtp.gmail.com", 587) as connection:
     connection.starttls()
-    connection.login(user=MY_EMAIL , password= MY_PASSWORD)
-    connection.sendmail(from_addr=MY_EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention \n\n it will rain bring an umbrella")
-else:
-    connect = smtplib.SMTP("smtp.gmail.com")
-    connect.starttls()
-    connect.login(user=MY_EMAIL , password= MY_PASSWORD)
-    connect.sendmail(from_addr=MY_EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention \n\n no rain expected")
+    connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+    connection.sendmail(
+        from_addr=MY_EMAIL,
+        to_addrs="mmaherali250@gmail.com",
+        msg=email_message.encode("utf-8"),
+    )
+
+print("Email sent successfully!")
