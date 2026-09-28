@@ -2,8 +2,7 @@ name: Rain Alert Checker
 
 on:
   schedule:
-    # تشغيل كل 10 دقائق
-    - cron: '*/5 * * * *'
+    - cron: '*/8 * * * *'
   workflow_dispatch:
 
 jobs:
