@@ -32,5 +32,5 @@ if will_rain:
 else:
     connect = smtplib.SMTP("smtp.gmail.com")
     connect.starttls()
-    connect.login(user=EMAIL , password= PASSWORD)
-    connect.sendmail(from_addr=EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention🔔 \n\n no rain expected")
+    connect.login(user=MY_EMAIL , password= MY_PASSWORD)
+    connect.sendmail(from_addr=MY_EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention🔔 \n\n no rain expected")
