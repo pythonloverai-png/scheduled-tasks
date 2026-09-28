@@ -25,10 +25,10 @@ for code in range(4):
         will_rain =True
 
 if will_rain:
-    connection = SMTP("smtp.gmail.com")
+    connection = smtplib.SMTP("smtp.gmail.com")
     connection.starttls()
-    connection.login(user=EMAIL , password= PASSWORD)
-    connection.sendmail(from_addr=EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention🔔 \n\n it will rain bring an umbrella☂️☂️")
+    connection.login(user=MY_EMAIL , password= MY_PASSWORD)
+    connection.sendmail(from_addr=MY_EMAIL , to_addrs="mmaherali250@gmail.com" , msg="Subject:attention🔔 \n\n it will rain bring an umbrella☂️☂️")
 else:
     connect = SMTP("smtp.gmail.com")
     connect.starttls()
