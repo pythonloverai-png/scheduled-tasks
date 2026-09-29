@@ -35,13 +35,13 @@ message_body = (
 email_message = f"Subject: {subject}\n\n{message_body}"
 
 # إرسال الإيميل مرة واحدة باستخدام with للإغلاق التلقائي
-with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+with smtplib.SMTP("smtp.gmail.com") as connection:
     connection.starttls()
     connection.login(user=MY_EMAIL, password=MY_PASSWORD)
     connection.sendmail(
         from_addr=MY_EMAIL,
         to_addrs="mmaherali250@gmail.com",
-        msg=email_message.encode("utf-8"),
+        msg=email_message,
     )
 
 print("Email sent successfully!")
