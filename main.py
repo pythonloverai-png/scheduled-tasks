@@ -4,11 +4,11 @@ import requests
 
 MY_EMAIL = os.environ.get("MY_EMAIL")
 MY_PASSWORD = os.environ.get("MY_PASSWORD")
-
+APPID = os.environ.get("APPID")
 PARAMETERS = {
     "lat": 24.617838,
     "lon": 46.748404,  # تم إصلاح المسافة الخفية هنا
-    "appid": "71ab17ddeffca062d4f83895801c0fd2",
+    "appid": APPID,
     "cnt": 4,
 }
 
