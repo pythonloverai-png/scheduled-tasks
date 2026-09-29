@@ -42,6 +42,15 @@ jobs:
           else
             echo "MY_PASSWORD is configured"
           fi
+          if [ -z "$APPID" ]; then
+            echo "APPID secret is not set!"
+            exit 1
+          else
+            echo "APPID is configured"
+          fi
+
+          echo ""
+          echo "All secrets are configured!"
 
           echo ""
           echo "All secrets are configured!"
